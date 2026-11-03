@@ -1,0 +1,16 @@
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+/build/
+/coverage/
+/android/local.properties
+/ios/Flutter/Generated.xcconfig
+/ios/Flutter/flutter_export_environment.sh
+/windows/flutter/ephemeral/
+/macos/Flutter/GeneratedPluginRegistrant.swift
+google-services.json
+GoogleService-Info.plist
+*.jks
+*.keystore
