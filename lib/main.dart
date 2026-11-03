@@ -207,11 +207,38 @@ class _InventoryPageState extends State<InventoryPage> {
 
   Widget _itemCard(Map<String, dynamic> item) {
     final price = (item['unitPrice'] as num?)?.toStringAsFixed(2) ?? '0.00';
-    return Card(margin: const EdgeInsets.symmetric(vertical: 4), child: ListTile(
-      title: Text('${item['itemName']}  •  ${item['sku']}'),
-      subtitle: Text('${item['category']}  |  Qty: ${item['quantity']}  |  RM $price  |  Reorder at: ${item['reorderLevel']}'),
-      isThreeLine: false,
-    ));
+    final quantity = item['quantity'] as num? ?? 0;
+    final reorderLevel = item['reorderLevel'] as num? ?? 0;
+    final isLowStock = quantity <= reorderLevel;
+    final warningColor = Theme.of(context).colorScheme.error;
+    return Card(
+      margin: const EdgeInsets.symmetric(vertical: 4),
+      color: isLowStock ? warningColor.withOpacity(0.045) : null,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+        side: isLowStock ? BorderSide(color: warningColor, width: 1.4) : BorderSide.none,
+      ),
+      child: ListTile(
+        title: Row(children: [
+          Expanded(child: Text('${item['itemName']}  •  ${item['sku']}')) ,
+          if (isLowStock) Container(
+            padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 5),
+            decoration: BoxDecoration(
+              color: warningColor.withOpacity(0.08),
+              border: Border.all(color: warningColor),
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: Row(mainAxisSize: MainAxisSize.min, children: [
+              Icon(Icons.warning_amber_rounded, size: 15, color: warningColor),
+              const SizedBox(width: 4),
+              Text('LOW STOCK', style: TextStyle(color: warningColor, fontWeight: FontWeight.bold, fontSize: 11)),
+            ]),
+          ),
+        ]),
+        subtitle: Text('${item['category']}  |  Qty: ${item['quantity']}  |  RM $price  |  Reorder at: ${item['reorderLevel']}'),
+        isThreeLine: false,
+      ),
+    );
   }
 
   @override
