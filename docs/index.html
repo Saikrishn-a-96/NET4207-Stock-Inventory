@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NET4207 Stock Inventory Manager</title>
+<style>
+  :root { --accent: #2563eb; --bg: #f8fafc; --card: #ffffff; --text: #0f172a; --muted: #64748b; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: "Segoe UI", system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+  header { background: linear-gradient(135deg, #1e3a8a, #2563eb); color: #fff; padding: 56px 24px; text-align: center; }
+  header h1 { font-size: 2.1rem; margin-bottom: 8px; }
+  header p { opacity: .9; max-width: 640px; margin: 0 auto 20px; }
+  .btn { display: inline-block; background: #fff; color: #1e3a8a; padding: 10px 22px; border-radius: 8px; font-weight: 600; text-decoration: none; }
+  .btn:hover { background: #e2e8f0; }
+  main { max-width: 960px; margin: -32px auto 0; padding: 0 24px 64px; }
+  section { background: var(--card); border: 1px solid #e2e8f0; border-radius: 12px; padding: 24px; margin-bottom: 20px; box-shadow: 0 1px 3px rgba(0,0,0,.06); }
+  h2 { font-size: 1.25rem; margin-bottom: 12px; color: var(--accent); }
+  ul { padding-left: 20px; }
+  li { margin-bottom: 6px; }
+  code { background: #eef2ff; padding: 2px 6px; border-radius: 4px; font-size: .9em; }
+  table { width: 100%; border-collapse: collapse; font-size: .95rem; }
+  th, td { border: 1px solid #e2e8f0; padding: 8px 10px; text-align: left; }
+  th { background: #f1f5f9; }
+  .muted { color: var(--muted); font-size: .9rem; }
+  footer { text-align: center; padding: 24px; color: var(--muted); font-size: .85rem; }
+</style>
+</head>
+<body>
+<header>
+  <h1>NET4207 Stock Inventory Manager</h1>
+  <p>A Flutter application for managing stock items with live Firebase Firestore storage, validation, search, and low-stock filtering.</p>
+  <a class="btn" href="https://github.com/Saikrishn-a-96/NET4207-Stock-Inventory">View on GitHub</a>
+</header>
+<main>
+  <section>
+    <h2>Features</h2>
+    <ul>
+      <li>Scrollable form with full validation before writing to Firestore</li>
+      <li>SKU format <code>STK-</code> + three digits; item name at least 3 characters (trimmed)</li>
+      <li>Category limited to Electronics, Stationery, Hardware, or Grocery</li>
+      <li>Quantity and reorder level: non-negative whole numbers; price &gt; RM 0</li>
+      <li>Form clears only after a successful Firestore write; errors shown inline</li>
+      <li>Live record list with loading, empty, and error states</li>
+      <li>Partial, case-insensitive search on item name or SKU</li>
+      <li>Combined filters: category, keyword, and low stock (<code>quantity &lt;= reorderLevel</code>)</li>
+      <li>Quantity sorting in both directions; Clear filters restores the full list</li>
+    </ul>
+  </section>
+  <section>
+    <h2>Firestore schema</h2>
+    <p class="muted">Collection: <code>stockItems</code> (Firestore-generated document IDs)</p>
+    <table>
+      <tr><th>Field</th><th>Type</th></tr>
+      <tr><td><code>sku</code></td><td>String</td></tr>
+      <tr><td><code>itemName</code></td><td>String</td></tr>
+      <tr><td><code>category</code></td><td>String</td></tr>
+      <tr><td><code>quantity</code></td><td>Integer</td></tr>
+      <tr><td><code>unitPrice</code></td><td>Number</td></tr>
+      <tr><td><code>reorderLevel</code></td><td>Integer</td></tr>
+      <tr><td><code>createdAt</code></td><td>server Timestamp</td></tr>
+    </table>
+  </section>
+  <section>
+    <h2>Getting started</h2>
+    <ul>
+      <li>Run <code>flutter create .</code> to generate platform files</li>
+      <li>Run <code>flutter pub get</code></li>
+      <li>Connect Firebase with <code>flutterfire configure</code> (generates <code>lib/firebase_options.dart</code>)</li>
+      <li>Ensure Firestore is enabled and rules allow read/write on <code>stockItems</code></li>
+      <li>Run <code>flutter run</code> (or <code>flutter run -d chrome</code> for web)</li>
+    </ul>
+  </section>
+</main>
+<footer>NET4207 Stock Inventory Manager &mdash; published with GitHub Pages</footer>
+</body>
+</html>
